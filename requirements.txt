@@ -1,0 +1,10 @@
+opencv-python
+matplotlib
+easyocr
+beautifulsoup4
+kaggle
+streamlit
+torch
+torchvision
+opencv-python-headless
+numpy
