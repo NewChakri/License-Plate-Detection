@@ -1,13 +1,9 @@
 import streamlit as st
 import cv2 as cv
 import numpy as np
-from detect_license import read_plate_number, get_coordinates, run_yolo_detection
-import easyocr
 import os
 import tempfile
-
-# Initialize EasyOCR reader
-reader = easyocr.Reader(['en'])
+from detect_license import load_model, detect_and_read_plate, reader
 
 # Streamlit app
 st.title("License Plate Detection and Recognition")
@@ -31,21 +27,16 @@ if uploaded_file is not None:
         img_path = os.path.join(tmpdir, uploaded_file.name)
         cv.imwrite(img_path, image)
 
-        # Run YOLOv9 detection
-        name = os.path.splitext(uploaded_file.name)[0]
+        # Load the YOLO model
+        model_test = load_model('runs/detect/train/weights/best.pt')
+
+        # Run YOLOv9 detection and OCR
         try:
-            run_yolo_detection(img_path, name)
-            st.success("YOLOv9 detection completed successfully.")
+            result_img, detected_text = detect_and_read_plate(img_path, model_test, reader)
+            st.success("License plate detection and recognition completed successfully.")
         except RuntimeError as e:
-            st.error(f"YOLOv9 detection failed: {e}")
+            st.error(f"License plate detection and recognition failed: {e}")
             st.stop()
-
-        # Read the coordinates from the .txt file
-        txt_file_path = os.path.join(tmpdir, f'yolov9/runs/detect/{name}/labels/{uploaded_file.name.replace("jpeg", "txt").replace("jpg", "txt").replace("png", "txt")}')
-        cordinates = get_coordinates(txt_file_path)
-
-        # Process the image and get the result
-        result_img, detected_text = read_plate_number(cordinates, image_rgb, reader)
 
         # Convert result image from BGR to RGB
         result_img_rgb = cv.cvtColor(result_img, cv.COLOR_BGR2RGB)
