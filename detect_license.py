@@ -1,31 +1,31 @@
-import subprocess
-import torch
 import cv2 as cv
-import easyocr
 import numpy as np
-
-def run_yolo_detection(source, name):
-    img_size = 640
-    device = 0
-    weights = '/content/yolov9/runs/train/yolov9-e3/weights/best.pt'
-    save_txt = '--save-txt'
-
-    command = [
-        'python', 'yolov9/detect.py',
-        '--source', source,
-        '--img', str(img_size),
-        '--device', str(device),
-        '--weights', weights,
-        '--name', name,
-        save_txt
-    ]
-
-    result = subprocess.run(command, capture_output=True, text=True)
-    if result.returncode != 0:
-        raise RuntimeError(f"YOLOv9 detection failed: {result.stderr}")
+from ultralytics import YOLO
+import easyocr
 
 # Initialize EasyOCR reader
 reader = easyocr.Reader(['en'])
+
+def load_model(model_path):
+    return YOLO(model_path)
+
+def detect_and_read_plate(image_path, model, reader):
+    results = model(image_path)
+    cordinates = []
+
+    for result in results:
+        boxes = result.boxes
+        for box in boxes:
+            x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
+            conf = box.conf[0].item()
+            cordinates.append([box.cls[0].item(), (x1 + x2) / 2 / image.shape[1], (y1 + y2) / 2 / image.shape[0], (x2 - x1) / image.shape[1], (y2 - y1) / image.shape[0]])
+
+    cordinates = np.array(cordinates)
+    image = cv.imread(image_path)
+    image_rgb = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+    result_img, detected_text = read_plate_number(cordinates, image_rgb, reader)
+
+    return result_img, detected_text
 
 # Function to process the license plate and save the text to a file
 def read_plate_number(cordinates, frame, reader):
@@ -59,16 +59,3 @@ def read_plate_number(cordinates, frame, reader):
         final_img = cv.putText(plot_img, text, (xmin, ymin - 10), cv.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
 
     return final_img, detected_text
-
-# Function to read the coordinates from the .txt file
-def get_coordinates(txt_file_path):
-    cordinates = []
-
-    with open(txt_file_path, 'r') as file:
-        lines = file.readlines()
-        for line in lines:
-            parts = line.strip().split()
-            parts = [float(part) for part in parts]
-            cordinates.append(parts)
-
-    return np.array(cordinates)
