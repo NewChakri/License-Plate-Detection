@@ -28,11 +28,11 @@ if uploaded_file is not None:
         cv.imwrite(img_path, image)
 
         # Load the YOLO model
-        model_test = load_model('runs/detect/train/weights/best.pt')
+        model = load_model('best.pt')
 
         # Run YOLOv9 detection and OCR
         try:
-            result_img, detected_text = detect_and_read_plate(img_path, model_test, reader)
+            result_img, detected_text = detect_and_read_plate(img_path, model, reader)
             st.success("License plate detection and recognition completed successfully.")
         except RuntimeError as e:
             st.error(f"License plate detection and recognition failed: {e}")
