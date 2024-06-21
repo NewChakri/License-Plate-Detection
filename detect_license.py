@@ -9,8 +9,15 @@ reader = easyocr.Reader(['en'])
 def load_model(model_path):
     return YOLO(model_path)
 
-def detect_and_read_plate(image, model, reader):  # Change image_path to image
-    results = model(image)  # Pass the image directly to the model
+def detect_and_read_plate(image_path, model, reader):
+    # Load the image first
+    image = cv.imread(image_path)
+    if image is None:
+        raise ValueError("Error loading image")
+    image_rgb = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+
+    # Run the model on the image
+    results = model(image_rgb)
     cordinates = []
 
     for result in results:
@@ -21,7 +28,6 @@ def detect_and_read_plate(image, model, reader):  # Change image_path to image
             cordinates.append([box.cls[0].item(), (x1 + x2) / 2 / image.shape[1], (y1 + y2) / 2 / image.shape[0], (x2 - x1) / image.shape[1], (y2 - y1) / image.shape[0]])
 
     cordinates = np.array(cordinates)
-    image_rgb = cv.cvtColor(image, cv.COLOR_BGR2RGB)
     result_img, detected_text = read_plate_number(cordinates, image_rgb, reader)
 
     return result_img, detected_text
