@@ -1,6 +1,6 @@
 # License-Plate-Detection
 
-This project is a Streamlit web application that detects and recognizes license plates in uploaded images using YOLOv5 for object detection and EasyOCR for optical character recognition (OCR).
+This project is a Streamlit web application that detects and recognizes license plates in uploaded images using YOLOv9 for object detection and EasyOCR for optical character recognition (OCR).
 
 ![image](https://github.com/NewChakri/License-Plate-Detection/assets/99199609/bb54dcd1-19c8-4297-92f5-268badee6e94)
 
