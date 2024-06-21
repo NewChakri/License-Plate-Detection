@@ -8,6 +8,6 @@ https://license-plate-detection-newchakri.streamlit.app
 
 ## Features
 Upload Image: Upload an image in JPG, JPEG, or PNG format. <br />
-License Plate Detection: Detect license plates in the uploaded image using a pre-trained YOLOv5 model. <br />
+License Plate Detection: Detect license plates in the uploaded image using a pre-trained YOLOv9 model. <br />
 OCR: Recognize and extract text from detected license plates using EasyOCR. <br />
 Display Results: View the uploaded image with detected license plates highlighted and the recognized text displayed. <br />
