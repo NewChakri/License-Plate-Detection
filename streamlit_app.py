@@ -39,10 +39,10 @@ if uploaded_file is not None:
             st.stop()
 
         # Convert result image from BGR to RGB
-        result_img_rgb = cv.cvtColor(result_img, cv.COLOR_BGR2RGB)
+        #result_img_rgb = cv.cvtColor(result_img, cv.COLOR_BGR2RGB)
 
         # Display the result image
-        st.image(result_img_rgb, caption='Result Image with Detected License Plates.', use_column_width=True)
+        #st.image(result_img_rgb, caption='Result Image with Detected License Plates.', use_column_width=True)
 
         # Display the detected text
         st.write("Detected Text from License Plates:")
