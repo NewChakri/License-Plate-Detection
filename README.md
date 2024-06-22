@@ -24,7 +24,7 @@ Web App : https://license-plate-detection-newchakri.streamlit.app
 
 ## Dataset Information
 **Source**
-The dataset used in this project is the "Number Plate Detection" dataset from Kaggle. You can find it [here][link](https://www.kaggle.com/datasets/aslanahmedov/number-plate-detection).
+The dataset used in this project is the "Number Plate Detection" dataset from Kaggle. You can find it [here](https://www.kaggle.com/datasets/aslanahmedov/number-plate-detection).
 
 **About the Dataset**
 This dataset contains 453 files - images in JPEG format with bounding box annotations of the car license plates within the image. Annotations are provided in the PASCAL VOC format. Pascal VOC (Visual Object Classes) is a format to store annotations for localizer or Object Detection datasets and is used by different annotation editors and tools to annotate, modify, and train Machine Learning models. In PASCAL VOC format, for each image there is an XML annotation file containing image details, bounding box details, classes, rotation, and other data.
