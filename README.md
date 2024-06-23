@@ -25,8 +25,8 @@ This dataset contains 453 files - images in JPEG format with bounding box annota
 **YOLOv9 Model Evaluation Results** <br />
 **Precision** : **97.7%** - Indicates that 97.7% of the detected license plates are correct. <br />
 **Recall** : **96%** - Indicates that 96% of the actual license plates in the images were correctly detected. <br />
-**mAP50**: **99.2%** - Mean Average Precision at 50% IoU threshold, indicating high performance at detecting license plates with a 50% overlap threshold. <br />
-**mAP50-95**: **78%** - Mean Average Precision averaged over multiple IoU thresholds from 50% to 95%, indicating good performance across different levels of overlap. <br />
+**mAP50** : **99.2%** - Mean Average Precision at 50% IoU threshold, indicating high performance at detecting license plates with a 50% overlap threshold. <br />
+**mAP50-95** : **78%** - Mean Average Precision averaged over multiple IoU thresholds from 50% to 95%, indicating good performance across different levels of overlap. <br />
 These results demonstrate that the YOLOv9 model used in this project is highly effective at detecting license plates with high precision and recall, maintaining good performance across various overlap thresholds between predicted and ground truth bounding boxes.
 
 
